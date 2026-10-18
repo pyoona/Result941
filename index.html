@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Result941</title>
+<style>
+  :root{
+    --bg:#f7fcf9;--panel:#ffffff;--green-deep:#1e7d4f;--green-mid:#3fae6d;
+    --green-soft:#d6f3e0;--green-soft-2:#c2ecd2;--text:#1c3327;--text-dim:#5b7a68;
+    --border:#bfe8cf;--shadow:0 2px 10px rgba(30,125,79,0.08);
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:'Segoe UI','Noto Sans Thai',system-ui,-apple-system,sans-serif;
+    -webkit-tap-highlight-color:transparent;}
+  .topbar{padding:14px 16px calc(10px + env(safe-area-inset-top,0px));
+    background:linear-gradient(135deg,var(--green-deep),var(--green-mid));color:#fff;
+    position:sticky;top:0;z-index:10;}
+  .topbar h1{margin:0;font-size:1.2rem;font-weight:700;}
+  .layout{display:flex;align-items:flex-start;gap:12px;padding:12px;max-width:1100px;margin:0 auto;}
+  .sidebar{background:var(--panel);border:1px solid var(--border);border-radius:12px;
+    box-shadow:var(--shadow);width:300px;flex:0 0 300px;overflow-x:hidden;overflow-y:auto;
+    position:sticky;top:calc(var(--topbar-h,60px) + 8px);max-height:calc(100vh - var(--topbar-h,60px) - 16px);align-self:flex-start;}
+  .cat{border-bottom:1px solid var(--border);}
+  .cat:last-child{border-bottom:none;}
+  .cat-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:6px;
+    padding:12px 14px;background:transparent;border:none;cursor:pointer;text-align:left;
+    font-size:.95rem;font-weight:600;color:#1a56db;}
+  .cat-btn:hover{background:var(--green-soft);}
+  .cat-btn.open{background:var(--green-soft-2);color:#0d3ea8;}
+  .cat-count{font-size:.7rem;font-weight:600;color:var(--text-dim);background:var(--green-soft);
+    border-radius:999px;padding:2px 6px;}
+  .cat-btn.open .cat-count{background:#fff;color:var(--green-deep);}
+  .chev{transition:transform .18s ease;color:var(--text-dim);flex:0 0 auto;}
+  .cat-btn.open .chev{transform:rotate(90deg);color:var(--green-deep);}
+  .item-list{display:none;flex-direction:column;padding:4px 0 6px;}
+  .item-list.show{display:flex;}
+  .item-btn{width:100%;text-align:left;background:transparent;border:none;cursor:pointer;
+    padding:8px 12px 8px 24px;font-size:.85rem;color:#1c1c1c;position:relative;}
+  .item-btn::before{content:"";position:absolute;left:12px;top:50%;width:5px;height:5px;
+    border-radius:50%;background:var(--green-mid);transform:translateY(-50%);}
+  .item-btn:hover,.item-btn:active{background:var(--green-soft);color:#1c1c1c;}
+  .item-btn.active{background:var(--green-mid);color:#fff;font-weight:600;}
+  .item-btn.active::before{background:#fff;}
+
+  .content{flex:1 1 auto;background:var(--panel);border:1px solid var(--border);border-radius:12px;
+    box-shadow:var(--shadow);padding:16px;min-height:220px;}
+  .placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;color:var(--text-dim);height:100%;min-height:180px;gap:8px;font-size:.85rem;}
+  .placeholder .big{font-size:1.8rem;}
+  .content h2{margin:0 0 12px;color:#1a56db;font-size:1rem;}
+  .content-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+  .links{display:flex;flex-direction:column;gap:8px;}
+  .link-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--border);
+    border-radius:8px;background:#fff;text-decoration:none;color:var(--text);}
+  .link-row:hover,.link-row:active{background:var(--green-soft);}
+  .link-badge{flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:#ffcc99;color:#7a3e00;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.7rem;}
+  .link-url{font-size:.75rem;color:#1c1c1c;word-break:break-all;}
+
+  /* แผงรายการด้านขวา (แสดงเฉพาะมือถือ) */
+  .item-panel{display:none;}
+
+  @media (max-width:680px){
+    .layout{padding:6px;gap:6px;}
+    .sidebar{top:calc(var(--topbar-h,60px) + 6px);max-height:calc(100vh - var(--topbar-h,60px) - 12px);}
+    .sidebar{flex:0 0 38%;width:38%;border-radius:8px;}
+    .item-list{display:none !important;}
+    .chev{display:none;}
+    .cat-btn{padding:10px 6px;font-size:15px;}
+    .cat-count{display:none;}
+    .content{display:none;}
+
+    .item-panel{display:block;flex:1 1 auto;min-width:0;background:var(--panel);
+      border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+    .panel-title{padding:10px 12px;font-weight:700;font-size:15px;color:#1a56db;
+      background:var(--green-soft);border-bottom:1px solid var(--border);}
+    .pitem{border-bottom:1px solid var(--border);}
+    .pitem:last-child{border-bottom:none;}
+    .pitem-btn{width:100%;text-align:left;background:transparent;border:none;cursor:pointer;
+      padding:12px;font-size:15px;color:#1c1c1c;}
+    .pitem-btn:active{background:var(--green-soft);}
+    .pitem-btn.active{background:var(--green-mid);color:#fff;font-weight:600;}
+    .pitem-links{display:none;padding:6px;background:var(--bg);}
+    .pitem-links.show{display:block;}
+    .pitem-links .links{gap:6px;}
+    .link-row{padding:5px 6px;gap:5px;}
+    .link-badge{width:16px;height:16px;font-size:.6rem;flex:0 0 16px;}
+    .link-url{font-size:.65rem;}
+    .panel-empty{padding:24px 12px;text-align:center;color:var(--text-dim);font-size:.85rem;}
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0f1a14;--panel:#16251c;--border:#254634;--text:#e5f5ec;--text-dim:#8fb39e;
+      --green-soft:#1c3527;--green-soft-2:#23422f;--shadow:0 2px 10px rgba(0,0,0,0.35);
+    }
+    .link-row{background:#1a2c22;}
+    .link-url{color:#e5f5ec;}
+    .item-btn,.pitem-btn{color:#e5f5ec;}
+  }
+</style>
+</head>
+<body>
+  <div class="topbar"><h1>Result941</h1></div>
+
+  <div class="layout">
+    <div class="sidebar" id="sidebar">
+      <div style="padding:20px;text-align:center;color:var(--text-dim);font-size:.85rem;">กำลังโหลดข้อมูลล่าสุด...</div>
+    </div>
+    <div class="item-panel" id="itemPanel"></div>
+    <div class="content" id="content">
+      <div class="placeholder"><div class="big">📋</div><div>เลือกรายการทางซ้าย</div></div>
+    </div>
+  </div>
+
+<script>
+let DATA = [];
+const sidebar = document.getElementById('sidebar');
+const content = document.getElementById('content');
+const itemPanel = document.getElementById('itemPanel');
+const isMobile = () => window.matchMedia('(max-width:680px)').matches;
+
+const API_URL = 'https://script.google.com/macros/s/AKfycbx8V7T03ShitNVHBUOxa95mxNAsX4FSceEzUCOc8_KQTzaOLO08Z2HIGGtpCFAvCyn4BQ/exec';
+
+function onLoaded(response){
+  DATA = response;
+  render();
+  if (isMobile() && DATA.length) toggleCat(0); // มือถือ: เปิดหมวดแรกให้เลย
+}
+function onFailed(){
+  sidebar.innerHTML = '<div style="padding:20px;text-align:center;color:#d32f2f;">เกิดข้อผิดพลาดในการโหลดข้อมูล</div>';
+}
+
+function fetchData() {
+  // เปิดจากหน้า Apps Script โดยตรง -> ใช้ google.script.run
+  if (typeof google !== 'undefined' && google.script && google.script.run) {
+    google.script.run.withSuccessHandler(onLoaded).withFailureHandler(onFailed).getSheetData();
+    return;
+  }
+  // เปิดจากที่อื่น (โฮสต์เอง/ไฟล์ในเครื่อง) -> เรียก API ผ่าน URL
+  fetch(API_URL + '?format=json&t=' + Date.now())
+    .then(r => r.json())
+    .then(onLoaded)
+    .catch(onFailed);
+}
+
+function buildLinks(item){
+  if(!item.links.length) return '<div style="color:var(--text-dim);font-size:.65rem;">ไม่มีลิงก์</div>';
+  return item.links.map((url, idx) => `
+    <a class="link-row" href="${url}" target="_blank" rel="noopener noreferrer">
+      <span class="link-badge">${idx+1}</span>
+      <span class="link-url">${url}</span>
+    </a>`).join('');
+}
+
+function render(){
+  sidebar.innerHTML = '';
+  DATA.forEach((cat, ci) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'cat';
+
+    const btn = document.createElement('button');
+    btn.className = 'cat-btn';
+    btn.id = 'cat-btn-' + ci;
+    btn.innerHTML = `<span>${cat.category}</span><span style="display:flex;align-items:center;gap:4px;"><span class="cat-count">${cat.items.length}</span><span class="chev">›</span></span>`;
+    btn.addEventListener('click', () => toggleCat(ci));
+
+    const list = document.createElement('div');
+    list.className = 'item-list';
+    list.id = 'cat-list-' + ci;
+    cat.items.forEach((item, ii) => {
+      const ib = document.createElement('button');
+      ib.className = 'item-btn';
+      ib.id = 'item-btn-' + ci + '-' + ii;
+      ib.textContent = item.name;
+      ib.addEventListener('click', () => selectItem(ci, ii));
+      list.appendChild(ib);
+    });
+
+    wrap.appendChild(btn);
+    wrap.appendChild(list);
+    sidebar.appendChild(wrap);
+  });
+}
+
+function toggleCat(ci){
+  const btn = document.getElementById('cat-btn-' + ci);
+  const list = document.getElementById('cat-list-' + ci);
+
+  if(isMobile()){
+    // มือถือ: เลือกหมวดแล้วแสดงรายการทางขวา
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('open'));
+    btn.classList.add('open');
+    renderItemPanel(ci);
+    return;
+  }
+
+  const isOpen = list.classList.contains('show');
+  document.querySelectorAll('.item-list').forEach(l => l.classList.remove('show'));
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('open'));
+  if(!isOpen){ list.classList.add('show'); btn.classList.add('open'); }
+}
+
+function renderItemPanel(ci){
+  const cat = DATA[ci];
+  itemPanel.innerHTML = `<div class="panel-title">${cat.category}</div>`;
+  if(!cat.items.length){
+    itemPanel.insertAdjacentHTML('beforeend','<div class="panel-empty">ไม่มีรายการ</div>');
+    return;
+  }
+  cat.items.forEach((item, ii) => {
+    const row = document.createElement('div');
+    row.className = 'pitem';
+    row.innerHTML = `<button class="pitem-btn">${item.name}</button><div class="pitem-links"><div class="links">${buildLinks(item)}</div></div>`;
+    const b = row.querySelector('.pitem-btn');
+    const l = row.querySelector('.pitem-links');
+    b.addEventListener('click', () => {
+      const open = l.classList.contains('show');
+      itemPanel.querySelectorAll('.pitem-links').forEach(x => x.classList.remove('show'));
+      itemPanel.querySelectorAll('.pitem-btn').forEach(x => x.classList.remove('active'));
+      if(!open){ l.classList.add('show'); b.classList.add('active'); }
+    });
+    itemPanel.appendChild(row);
+  });
+}
+
+function selectItem(ci, ii){
+  document.querySelectorAll('.item-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('item-btn-' + ci + '-' + ii).classList.add('active');
+  const cat = DATA[ci];
+  const item = cat.items[ii];
+  content.innerHTML = `
+    <div class="content-header">
+      <div style="font-size:.6rem;font-weight:700;color:#1a56db;background:var(--green-soft);padding:2px 6px;border-radius:999px;">${cat.category}</div>
+    </div>
+    <h2>${item.name}</h2>
+    <div class="links">${buildLinks(item)}</div>
+  `;
+}
+
+function setTopbarH(){
+  const t=document.querySelector('.topbar');
+  document.documentElement.style.setProperty('--topbar-h', t.offsetHeight+'px');
+}
+setTopbarH();
+window.addEventListener('resize', setTopbarH);
+fetchData();
+</script>
+</body>
+</html>
