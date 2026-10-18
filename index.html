@@ -123,7 +123,7 @@ const content = document.getElementById('content');
 const itemPanel = document.getElementById('itemPanel');
 const isMobile = () => window.matchMedia('(max-width:680px)').matches;
 
-const API_URL = 'https://script.google.com/macros/s/AKfycbx8V7T03ShitNVHBUOxa95mxNAsX4FSceEzUCOc8_KQTzaOLO08Z2HIGGtpCFAvCyn4BQ/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbzQ1GDUa6TcGjGgdyXIAAM4sjcDgGXEIAU6EsbHBXNbgL0tlntR6SAFasv-kWo_P1go9Q/exec';
 
 function onLoaded(response){
   DATA = response;
@@ -153,6 +153,7 @@ function fetchData() {
       let json;
       try { json = JSON.parse(txt); }
       catch (e) { throw new Error('API ตอบกลับเป็น HTML ไม่ใช่ JSON (ยังไม่ได้ Deploy เวอร์ชันใหม่ หรือสิทธิ์ไม่ใช่ Anyone)'); }
+      if (json && json.error) throw new Error('ฝั่งสคริปต์: ' + json.error);
       if (!Array.isArray(json)) throw new Error('รูปแบบข้อมูลไม่ถูกต้อง');
       onLoaded(json);
     })
