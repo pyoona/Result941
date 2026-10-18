@@ -130,8 +130,11 @@ function onLoaded(response){
   render();
   if (isMobile() && DATA.length) toggleCat(0); // มือถือ: เปิดหมวดแรกให้เลย
 }
-function onFailed(){
-  sidebar.innerHTML = '<div style="padding:20px;text-align:center;color:#d32f2f;">เกิดข้อผิดพลาดในการโหลดข้อมูล</div>';
+function onFailed(err){
+  const msg = (err && err.message) ? err.message : (err ? String(err) : '');
+  sidebar.innerHTML = '<div style="padding:20px;text-align:center;color:#d32f2f;">เกิดข้อผิดพลาดในการโหลดข้อมูล'
+    + (msg ? '<div style="margin-top:8px;font-size:.7rem;color:#8a8a8a;word-break:break-word;">' + msg + '</div>' : '')
+    + '</div>';
 }
 
 function fetchData() {
@@ -142,8 +145,17 @@ function fetchData() {
   }
   // เปิดจากที่อื่น (โฮสต์เอง/ไฟล์ในเครื่อง) -> เรียก API ผ่าน URL
   fetch(API_URL + '?format=json&t=' + Date.now())
-    .then(r => r.json())
-    .then(onLoaded)
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.text();
+    })
+    .then(txt => {
+      let json;
+      try { json = JSON.parse(txt); }
+      catch (e) { throw new Error('API ตอบกลับเป็น HTML ไม่ใช่ JSON (ยังไม่ได้ Deploy เวอร์ชันใหม่ หรือสิทธิ์ไม่ใช่ Anyone)'); }
+      if (!Array.isArray(json)) throw new Error('รูปแบบข้อมูลไม่ถูกต้อง');
+      onLoaded(json);
+    })
     .catch(onFailed);
 }
 
