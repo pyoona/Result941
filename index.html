@@ -40,12 +40,13 @@
     padding:12px 14px;background:transparent;border:none;cursor:pointer;text-align:left;
     font-size:.95rem;font-weight:600;color:#1a56db;}
   .cat-btn:hover{background:var(--green-soft);}
-  .cat-btn.open{background:var(--green-soft-2);color:#0d3ea8;}
+  /* หมวดที่เปิดอยู่: พื้นน้ำเงินสด ตัวหนังสือขาว (ทุกขนาดจอ) */
+  .cat-btn.open{background:#1a73e8;color:#fff;}
   .cat-count{font-size:.7rem;font-weight:600;color:var(--text-dim);background:var(--green-soft);
     border-radius:999px;padding:2px 6px;}
-  .cat-btn.open .cat-count{background:#fff;color:var(--green-deep);}
+  .cat-btn.open .cat-count{background:#fff;color:#1a73e8;}
   .chev{transition:transform .18s ease;color:var(--text-dim);flex:0 0 auto;}
-  .cat-btn.open .chev{transform:rotate(90deg);color:var(--green-deep);}
+  .cat-btn.open .chev{transform:rotate(90deg);color:#fff;}
   .item-list{display:none;flex-direction:column;padding:4px 0 6px;}
   .item-list.show{display:flex;}
   .item-btn{width:100%;text-align:left;background:transparent;border:none;cursor:pointer;
@@ -86,9 +87,9 @@
 
     .item-panel{display:block;flex:1 1 auto;min-width:0;background:var(--panel);
       border:1px solid var(--border);border-radius:8px;overflow:hidden;}
-  .panel-title{padding:10px 12px;font-weight:700;font-size:15px;color:#1a56db;
-  background:#ffcc99;border-bottom:1px solid #f5b47a;}
-      .pitem{border-bottom:1px solid var(--border);}
+    .panel-title{padding:10px 12px;font-weight:700;font-size:15px;color:#1a56db;
+      background:#ffcc99;border-bottom:1px solid #f5b47a;}
+    .pitem{border-bottom:1px solid var(--border);}
     .pitem:last-child{border-bottom:none;}
     .pitem-btn{width:100%;text-align:left;background:transparent;border:none;cursor:pointer;
       padding:7px 12px;font-size:15px;color:#1c1c1c;}
